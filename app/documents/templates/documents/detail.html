@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}{{ document.title }}{% endblock %}
+
+{% block content_title %}{{ document.title }}{% endblock %}
+
+{% block sidebar %}
+  <ul class="well nav nav-list">
+
+    <!--Commented out, as tags not needed yet -->
+  {#  <li><h4>Tags</h4></li>
+    {% for tag in document.tags %}
+      <li><a href="{{ url_for('documents.tag_detail', slug=tag.slug) }}">{{ tag.name }}</a></li>
+    {% endfor %} #}
+
+    <li><h4>Modify Docuemnt: </h4></li>
+    <li><a href="{{ url_for('documents.edit', slug=document.slug)}}">Edit</a></li>
+    <li><a href="{{ url_for('documents.delete', slug=document.slug)}}">Delete</a></li>
+  </ul>
+  {% if g.user == document.author %}
+{% endif %}
+  <p>Published {{ document.created_timestamp.strftime('%m/%d/%Y') }}</p>
+{% endblock %}
+
+{% block content %}
+  <div class="media">
+    <a href="{{ url_for('documents.detail', slug=document.slug) }}">
+      <div class="media-left">
+        {% if document.imageUrl %}
+        {#  <img src="{{document.imageUrl}}" width="200px">#}
+          <embed src="{{document.imageUrl}}"  width="200px" />
+
+        {% else %}
+          <img src="../static/images/no_image.png" width="200px">
+        {% endif %}
+      </div>
+      <div class="media-body">
+        <h4>{{document.title}}</h4>
+        <p>Author: {{document.author}}</p>
+        <p>Description: {{document.body}}</p>
+      </div>
+    </a>
+  </div>
+{% endblock %}
