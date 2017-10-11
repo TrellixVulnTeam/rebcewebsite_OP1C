@@ -1,6 +1,5 @@
-from app import app, login_manager,db #normally is already be in memory as main.py calls it before views.py
-from flask import render_template, request,flash, redirect, url_for
-from forms import LoginForm, CreateUserForm
+from app import app #normally is already be in memory as main.py calls it before views.py
+from flask import render_template, request, redirect, url_for
 
 @app.route('/')
 def homepage():
@@ -15,14 +14,14 @@ def page_not_found(e):
 def page_not_found(e):
     return render_template('404.html')
 
-@app.route("/login/", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        form = LoginForm(request.form)
-        if form.validate():
-            login_user(form.user, remember=form.remember_me.data) #sets correct session values
-            flash("Successfully logged in as %s." % form.user.email, "success")
-            return redirect(request.args.get("next") or url_for("homepage"))
-    else:
-        form = LoginForm()
-    return render_template("login.html", form=form)
+# @app.route("/login/", methods=["GET", "POST"])
+# def login():
+#     if request.method == "POST":
+#         form = LoginForm(request.form)
+#         if form.validate():
+#             login_user(form.user, remember=form.remember_me.data) #sets correct session values
+#             flash("Successfully logged in as %s." % form.user.email, "success")
+#             return redirect(request.args.get("next") or url_for("homepage"))
+#     else:
+#         form = LoginForm()
+#     return render_template("login.html", form=form)
